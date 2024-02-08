@@ -2,6 +2,7 @@ import { useState } from 'react';
 import TasksList from './TasksList';
 import { FaSearch, FaTasks } from 'react-icons/fa';
 import { MdOutlineTaskAlt } from "react-icons/md";
+import Swal from 'sweetalert2';
 
 const data = [
   {
@@ -59,6 +60,29 @@ const TasksBoard = () => {
     }
   };
 
+  const handleDeleteTask = (taskId) => {
+    const taskToDelete = tasks.find(task => task.id === taskId);
+
+    Swal.fire({
+      title: "Delete Task",
+      text: `Are you sure you want to delete the task "${taskToDelete.title}"?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setTasks(tasks.filter(task => task.id !== taskId));
+        Swal.fire(
+          "Deleted!",
+          `The task "${taskToDelete.title}" has been successfully deleted.`,
+          "success"
+        );
+      }
+    });
+  };
+
 
   return (
     <section className='w-full md:max-w-7xl mx-auto border shadow rounded-md p-5 my-10'>
@@ -92,7 +116,7 @@ const TasksBoard = () => {
         </div>
       </div>
 
-      <TasksList tasks={tasks} />
+      <TasksList tasks={tasks} deleteTask={handleDeleteTask} />
     </section>
   );
 };
