@@ -123,6 +123,18 @@ const TasksBoard = () => {
     );
   };
 
+  const handlePriorityFilterChange = (e) => {
+    const value = e.target.value;
+    if (value === '') {
+      setTasks(data);
+    } else {
+      const filteredTasks = data.filter(task =>
+        task.priority === value
+      );
+      setTasks(filteredTasks);
+    }
+  };
+
 
 
   return (
@@ -149,6 +161,18 @@ const TasksBoard = () => {
             onChange={handleSearchInputChange}
           />
           <FaSearch className="absolute top-3 left-3 text-gray-400" />
+        </div>
+
+        <div>
+          <select
+            onChange={handlePriorityFilterChange}
+            className="border rounded py-2 px-4 outline-none"
+          >
+            <option value="">Filter by Priority</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
         </div>
 
         <div>
