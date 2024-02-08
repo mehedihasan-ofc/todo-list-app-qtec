@@ -142,14 +142,14 @@ const TasksBoard = () => {
 
       <div className="flex justify-between items-center">
         <div className='flex items-center gap-5'>
-          <div className='flex items-center gap-3'>
-            <FaTasks size={20} />
-            <h4 className="text-lg font-semibold">Total Tasks: <span className="font-normal">{tasks?.length}</span></h4>
+          <div className='flex items-center gap-2'>
+            <FaTasks className='text-blue-500' size={24} />
+            <h4 className="text-lg text-blue-500 font-semibold">Total Tasks: <span className="font-normal">{tasks?.length}</span></h4>
           </div>
 
-          <div className='flex items-center gap-3'>
-            <MdOutlineTaskAlt size={20} />
-            <h4 className="text-lg font-semibold">Completed Tasks: <span className="font-normal">{tasks.filter(task => task.status === "completed").length}</span></h4>
+          <div className='flex items-center gap-2'>
+            <MdOutlineTaskAlt className='text-teal-500' size={24} />
+            <h4 className="text-lg text-teal-500 font-semibold">Completed Tasks: <span className="font-normal">{tasks.filter(task => task.status === "completed").length}</span></h4>
           </div>
         </div>
 
