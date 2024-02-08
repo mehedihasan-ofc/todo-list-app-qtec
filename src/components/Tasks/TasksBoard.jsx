@@ -3,6 +3,7 @@ import TasksList from './TasksList';
 import { FaSearch, FaTasks } from 'react-icons/fa';
 import { MdOutlineTaskAlt } from "react-icons/md";
 import Swal from 'sweetalert2';
+import EmptyData from './EmptyData';
 
 const data = [
   {
@@ -83,6 +84,46 @@ const TasksBoard = () => {
     });
   };
 
+  const handleDeleteAllTasks = () => {
+    Swal.fire({
+      title: "Delete All Tasks",
+      text: "Are you sure you want to delete all tasks?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete all!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setTasks([]);
+        Swal.fire(
+          "Deleted!",
+          "All tasks have been successfully deleted.",
+          "success"
+        );
+      }
+    });
+  };
+
+  const handleCompleteTask = (taskId) => {
+
+    const taskToDelete = tasks.find(task => task.id === taskId);
+
+    const updatedTasks = tasks.map(task => {
+      if (task.id === taskId) {
+        return { ...task, status: "completed" };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+    Swal.fire(
+      "Completed!",
+      `The task "${taskToDelete.title}" has been marked as completed.`,
+      "success"
+    );
+  };
+
+
 
   return (
     <section className='w-full md:max-w-7xl mx-auto border shadow rounded-md p-5 my-10'>
@@ -112,11 +153,11 @@ const TasksBoard = () => {
 
         <div>
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">Add Task</button>
-          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete All</button>
+          <button onClick={handleDeleteAllTasks} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete All</button>
         </div>
       </div>
 
-      <TasksList tasks={tasks} deleteTask={handleDeleteTask} />
+      {tasks.length > 0 ? <TasksList tasks={tasks} completeTask={handleCompleteTask} deleteTask={handleDeleteTask} /> : <EmptyData message="Your to-do list is empty. Enjoy the satisfaction of a clean slate!" />}
     </section>
   );
 };

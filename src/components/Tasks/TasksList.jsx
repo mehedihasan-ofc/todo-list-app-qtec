@@ -1,4 +1,8 @@
-const TasksList = ({ tasks, deleteTask }) => {
+import { Menu, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import { BsThreeDots } from "react-icons/bs";
+
+const TasksList = ({ tasks, deleteTask, completeTask }) => {
     return (
         <div className="overflow-auto mt-5">
             <table className="table-fixed overflow-auto xl:w-full">
@@ -7,7 +11,7 @@ const TasksList = ({ tasks, deleteTask }) => {
                         <th className="p-4 pb-8 text-sm font-semibold capitalize w-[48px]"></th>
                         <th className="p-4 pb-8 text-sm font-semibold capitalize w-[300px]"> Title </th>
                         <th className="p-4 pb-8 text-sm font-semibold capitalize w-full"> Description </th>
-                        <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[350px]"> Status </th>
+                        <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[200px]"> Status </th>
                         <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[100px]"> Priority </th>
                         <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[100px]"> Options </th>
                     </tr>
@@ -50,17 +54,43 @@ const TasksList = ({ tasks, deleteTask }) => {
                                 </td>
                                 <td className="text-center">
                                     <div className={`border text-sm rounded-full capitalize text-center ${task?.priority === "low" ? "border-blue-500 text-blue-500" :
-                                            task?.priority === "medium" ? "border-yellow-500 text-yellow-500" :
-                                                task?.priority === "high" ? "border-red-500 text-red-500" :
-                                                    ""
+                                        task?.priority === "medium" ? "border-yellow-500 text-yellow-500" :
+                                            task?.priority === "high" ? "border-red-500 text-red-500" :
+                                                ""
                                         }`}>
                                         {task?.priority}
                                     </div>
                                 </td>
                                 <td>
                                     <div className="flex items-center justify-center space-x-3">
-                                        <button onClick={() => deleteTask(task.id)} className="text-red-500">Delete</button>
-                                        <button className="text-blue-500">Edit</button>
+                                        <Menu as="div" className="relative inline-block text-left">
+                                            <div>
+                                                <Menu.Button>
+                                                    <BsThreeDots className="cursor-pointer mb-1" size={20} />
+                                                </Menu.Button>
+                                            </div>
+                                            <Transition
+                                                as={Fragment}
+                                                enter="transition ease-out duration-100"
+                                                enterFrom="transform opacity-0 scale-95"
+                                                enterTo="transform opacity-100 scale-100"
+                                                leave="transition ease-in duration-75"
+                                                leaveFrom="transform opacity-100 scale-100"
+                                                leaveTo="transform opacity-0 scale-95"
+                                            >
+                                                <Menu.Items className="absolute right-0 top-6 divide-y divide-gray-100 rounded bg-white shadow">
+                                                    <Menu.Item>
+                                                        <button className="px-5 py-1 hover:bg-blue-500 hover:text-white w-full">Edit</button>
+                                                    </Menu.Item>
+                                                    <Menu.Item>
+                                                        <button onClick={() => deleteTask(task.id)} className="px-5 py-1 hover:bg-red-500 hover:text-white w-full">Delete</button>
+                                                    </Menu.Item>
+                                                    <Menu.Item>
+                                                        <button disabled={task?.status === "completed"} onClick={() => completeTask(task.id)} className="px-5 py-1 hover:bg-teal-500 hover:text-white w-full">Completed</button>
+                                                    </Menu.Item>
+                                                </Menu.Items>
+                                            </Transition>
+                                        </Menu>
                                     </div>
                                 </td>
                             </tr>
