@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import TasksBoard from "./components/Tasks/TasksBoard";
 import Loading from "./components/Loading/Loading";
 import Footer from "./components/Footer/Footer";
+import Navbar from "./components/Navbar/Navbar";
 
 const App = () => {
 
@@ -23,6 +24,7 @@ const App = () => {
 
   return (
     <>
+      <Navbar />
       <TasksBoard />
       <Footer />
     </>

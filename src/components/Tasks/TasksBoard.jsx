@@ -245,9 +245,9 @@ const TasksBoard = () => {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center gap-4 mt-4 md:mt-0">
-          <button onClick={() => setShowAddModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Task</button>
-          <button onClick={handleDeleteAllTasks} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete All</button>
+        <div className="flex items-center gap-4 mt-4 md:mt-0">
+          <button onClick={() => setShowAddModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">Add Task</button>
+          <button onClick={handleDeleteAllTasks} className="bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded">Delete All</button>
         </div>
       </div>
 
