@@ -4,6 +4,16 @@
 
 This is a simple Todo List application built using React (with Next.js), Tailwind CSS for styling, and Headless UI for modals. The application allows users to manage their tasks by adding, editing, marking as completed, and deleting tasks. Each task has a status (completed or incomplete) and a priority (low, medium, or high) which is indicated by different colors in the task list. Additionally, the application provides basic task management functionalities and a filtering system based on priority.
 
+## Technologies Used
+
+- React JS
+- Tailwind CSS
+- Headless UI
+
+## Live Link
+
+Hosted in Firebase -> [InstruPlay Academy](https://instruplay-live.web.app/)
+
 ## Features
 
 - Display a list of tasks with their respective status (completed or not completed).
@@ -23,30 +33,3 @@ This is a simple Todo List application built using React (with Next.js), Tailwin
 
 ![Screenshot 1](/screenshots/screenshot1.png)
 ![Screenshot 2](/screenshots/screenshot2.png)
-
-## Demo
-
-[Live Demo](#) - Provide a link to a live demo if available.
-
-## Technologies Used
-
-- React (with Next.js)
-- Tailwind CSS
-- Headless UI
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request with your suggestions or improvements.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-## Acknowledgements
-
-- Inspiration for this project came from [insert inspiration source here].
-- Special thanks to [insert name] for their guidance and support.
-
-## Contact
-
-For any inquiries or feedback, please contact [insert your email address].
