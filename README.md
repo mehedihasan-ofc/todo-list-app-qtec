@@ -12,7 +12,7 @@ This is a simple Todo List application built using React (with Next.js), Tailwin
 
 ## Live Link
 
-Hosted in Netlify -> [Todo List App](https://instruplay-live.web.app/)
+Hosted in Netlify -> [Todo List App](https://todo-list-app-qtec.netlify.app/)
 
 ## Features
 

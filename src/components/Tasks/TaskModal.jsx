@@ -71,7 +71,7 @@ const TaskModal = ({ onSave, taskToUpdate, isOpen, closeModal }) => {
 
                                 <form onSubmit={handleSubmit}>
                                     <div className="mt-2">
-                                        <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
+                                        <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">Title</label>
                                         <input
                                             type="text"
                                             name="title"
@@ -85,7 +85,7 @@ const TaskModal = ({ onSave, taskToUpdate, isOpen, closeModal }) => {
                                     </div>
 
                                     <div className="mt-2">
-                                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+                                        <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                                         <textarea
                                             name="description"
                                             id="description"
@@ -99,7 +99,7 @@ const TaskModal = ({ onSave, taskToUpdate, isOpen, closeModal }) => {
                                     </div>
 
                                     <div className="mt-2">
-                                        <label htmlFor="priority" className="block text-sm font-medium text-gray-700">Priority</label>
+                                        <label htmlFor="priority" className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
                                         <select
                                             name="priority"
                                             id="priority"
