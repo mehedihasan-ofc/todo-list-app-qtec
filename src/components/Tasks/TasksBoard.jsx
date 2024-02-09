@@ -243,12 +243,12 @@ const TasksBoard = () => {
           <div className='flex flex-col md:flex-row items-center gap-4 mb-4 md:mb-0'>
             <div className='flex items-center border py-1 px-3 shadow-sm rounded gap-2'>
               <FaTasks className='text-blue-500' size={24} />
-              <h4 className="text-lg text-blue-500 font-semibold">Total Tasks: <span className="font-normal">{tasks?.length}</span></h4>
+              <h4 className="text-lg text-blue-500 font-medium">Total Tasks: {tasks?.length}</h4>
             </div>
 
             <div className='flex items-center border py-1 px-3 shadow-sm rounded gap-2'>
               <MdOutlineTaskAlt className='text-teal-500' size={24} />
-              <h4 className="text-lg text-teal-500 font-semibold">Completed Tasks: <span className="font-normal">{tasks.filter(task => task.status === "completed").length}</span></h4>
+              <h4 className="text-lg text-teal-500 font-medium">Completed Tasks: {tasks.filter(task => task.status === "completed").length}</h4>
             </div>
           </div>
 
@@ -277,8 +277,18 @@ const TasksBoard = () => {
           </div>
 
           <div className="flex items-center gap-4 mt-4 md:mt-0">
-            <button onClick={() => setShowAddModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">Add Task</button>
-            <button onClick={handleDeleteAllTasks} className="bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded">Delete All</button>
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="bg-blue-500 hover:bg-blue-700 transition-colors duration-300 ease-in-out text-white font-medium py-2 px-4 rounded"
+            >
+              Add Task
+            </button>
+            <button
+              onClick={handleDeleteAllTasks}
+              className="bg-red-500 hover:bg-red-700 transition-colors duration-300 ease-in-out text-white font-medium py-2 px-4 rounded"
+            >
+              Delete All
+            </button>
           </div>
         </div>
 
