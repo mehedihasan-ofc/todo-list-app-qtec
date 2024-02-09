@@ -205,9 +205,11 @@ const TasksBoard = () => {
   };
 
   return (
-    <section className='w-full md:max-w-7xl mx-auto border shadow rounded-md p-5 my-10'>
-      <div className="flex justify-between items-center">
-        <div className='flex items-center gap-5'>
+    <section className='w-full max-w-7xl mx-auto border shadow rounded-md p-5 my-10'>
+
+      <div className="flex flex-col md:flex-row justify-between items-center">
+
+        <div className='flex flex-col md:flex-row items-center gap-5 mb-4 md:mb-0'>
           <div className='flex items-center gap-2'>
             <FaTasks className='text-blue-500' size={24} />
             <h4 className="text-lg text-blue-500 font-semibold">Total Tasks: <span className="font-normal">{tasks?.length}</span></h4>
@@ -219,37 +221,38 @@ const TasksBoard = () => {
           </div>
         </div>
 
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search tasks..."
-            className="border rounded py-2 px-4 pl-10 outline-none"
-            onChange={handleSearchInputChange}
-          />
-          <FaSearch className="absolute top-3 left-3 text-gray-400" />
+        <div className="flex flex-col md:flex-row items-center gap-4">
+          <div className="relative flex-grow">
+            <input
+              type="text"
+              placeholder="Search tasks..."
+              className="border rounded py-2 px-4 pl-10 outline-none"
+              onChange={handleSearchInputChange}
+            />
+            <FaSearch className="absolute top-3 left-3 text-gray-400" />
+          </div>
+
+          <div>
+            <select
+              onChange={handlePriorityFilterChange}
+              className="border rounded py-2 px-4 outline-none"
+            >
+              <option value="">Filter by Priority</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
         </div>
 
-        <div>
-          <select
-            onChange={handlePriorityFilterChange}
-            className="border rounded py-2 px-4 outline-none"
-          >
-            <option value="">Filter by Priority</option>
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-          </select>
-        </div>
-
-        <div>
-          <button onClick={() => setShowAddModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">Add Task</button>
+        <div className="flex flex-col md:flex-row items-center gap-4 mt-4 md:mt-0">
+          <button onClick={() => setShowAddModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Task</button>
           <button onClick={handleDeleteAllTasks} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete All</button>
         </div>
-
-        <TaskModal isOpen={showAddModal} closeModal={handleCloseClick} onSave={handleAddEditTask} taskToUpdate={taskToUpdate} />
       </div>
 
       {filteredTasks.length > 0 ? <TasksList tasks={filteredTasks} onEdit={handleEditTask} completeTask={handleCompleteTask} deleteTask={handleDeleteTask} /> : <EmptyData message="No Data Found!" />}
+      <TaskModal isOpen={showAddModal} closeModal={handleCloseClick} onSave={handleAddEditTask} taskToUpdate={taskToUpdate} />
     </section>
   );
 };

@@ -20,13 +20,13 @@ const TasksList = ({ tasks, deleteTask, completeTask, onEdit }) => {
                 <tbody>
                     {
                         tasks?.map(task => (
-                            <tr key={task.id} className="border-t border-gray-300 [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
+                            <tr key={task.id} className="border-t border-gray-200 [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
                                 <td>
                                     {task?.status === "completed" ? <BiTask className='text-teal-500' size={20} /> : <BiTaskX className='text-red-500' size={20} />}
                                 </td>
-                                <td>{task.title}</td>
+                                <td className="text-sm md:text-base">{task.title}</td>
                                 <td>
-                                    <div>
+                                    <div className="text-sm md:text-base">
                                         {task.description}
                                     </div>
                                 </td>
@@ -40,7 +40,7 @@ const TasksList = ({ tasks, deleteTask, completeTask, onEdit }) => {
                                     </ul>
                                 </td>
                                 <td className="text-center">
-                                    <div className={`border text-sm rounded-full capitalize text-center ${task?.priority === "low" ? "border-blue-500 text-blue-500" :
+                                    <div className={`border text-xs px-2 md:text-sm rounded-full capitalize text-center ${task?.priority === "low" ? "border-blue-500 text-blue-500" :
                                         task?.priority === "medium" ? "border-yellow-500 text-yellow-500" :
                                             task?.priority === "high" ? "border-red-500 text-red-500" :
                                                 ""
@@ -50,9 +50,9 @@ const TasksList = ({ tasks, deleteTask, completeTask, onEdit }) => {
                                 </td>
                                 <td>
                                     <div className="flex items-center justify-center gap-1">
-                                        <button disabled={task?.status === "completed"} onClick={() => completeTask(task.id)}><MdOutlineTaskAlt className="text-teal-500 hover:text-teal-600" size={16} /></button>
-                                        <button onClick={() => onEdit(task)}><AiOutlineEdit className="text-indigo-500 hover:text-indigo-600" size={16} /></button>
-                                        <button onClick={() => deleteTask(task.id)}><RiDeleteBin6Line className="text-red-500 hover:text-red-600" size={16} /></button>
+                                        <button disabled={task?.status === "completed"} onClick={() => completeTask(task.id)}><MdOutlineTaskAlt className="text-teal-500 hover:text-teal-600" size={18} /></button>
+                                        <button onClick={() => onEdit(task)}><AiOutlineEdit className="text-indigo-500 hover:text-indigo-600" size={18} /></button>
+                                        <button onClick={() => deleteTask(task.id)}><RiDeleteBin6Line className="text-red-500 hover:text-red-600" size={18} /></button>
                                     </div>
                                 </td>
                             </tr>
