@@ -4,6 +4,7 @@ import { FaSearch, FaTasks } from 'react-icons/fa';
 import { MdOutlineTaskAlt } from "react-icons/md";
 import Swal from 'sweetalert2';
 import EmptyData from './EmptyData';
+import TaskModal from './TaskModal';
 
 const data = [
   {
@@ -47,7 +48,46 @@ const data = [
 const TasksBoard = () => {
 
   const [tasks, setTasks] = useState(data);
+  // const [isOpen, setIsOpen] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [taskToUpdate, setTaskToUpdate] = useState(null);
+  const [latestId, setLatestId] = useState(data.length + 1);
 
+
+  // =============================================================================>
+  function handleAddEditTask(newTask, isAdd) {
+
+    if (!isAdd) {
+      
+      const taskWithId = { ...newTask, id: latestId };
+
+      setTasks([...tasks, taskWithId]);
+      setLatestId(latestId + 1);
+    } else {
+      setTasks(
+        tasks.map((task) => {
+          if (task.id === newTask.id) {
+            return newTask;
+          }
+          return task;
+        })
+      );
+    }
+    handleCloseClick();
+  }
+
+  function handleEditTask(task) {
+
+    setTaskToUpdate(task);
+    setShowAddModal(true);
+  }
+
+  function handleCloseClick() {
+    setShowAddModal(false);
+    setTaskToUpdate(null);
+  }
+
+  // =============================================================================>
   const handleSearchInputChange = (e) => {
     const value = e.target.value;
 
@@ -139,7 +179,6 @@ const TasksBoard = () => {
 
   return (
     <section className='w-full md:max-w-7xl mx-auto border shadow rounded-md p-5 my-10'>
-
       <div className="flex justify-between items-center">
         <div className='flex items-center gap-5'>
           <div className='flex items-center gap-2'>
@@ -153,35 +192,16 @@ const TasksBoard = () => {
           </div>
         </div>
 
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search tasks..."
-            className="border rounded py-2 px-4 pl-10 outline-none"
-            onChange={handleSearchInputChange}
-          />
-          <FaSearch className="absolute top-3 left-3 text-gray-400" />
-        </div>
-
         <div>
-          <select
-            onChange={handlePriorityFilterChange}
-            className="border rounded py-2 px-4 outline-none"
-          >
-            <option value="">Filter by Priority</option>
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-          </select>
-        </div>
-
-        <div>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">Add Task</button>
+          <button onClick={() => setShowAddModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">Add Task</button>
           <button onClick={handleDeleteAllTasks} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete All</button>
         </div>
+
+        {/* add task modal */}
+        <TaskModal isOpen={showAddModal} closeModal={handleCloseClick} onSave={handleAddEditTask} taskToUpdate={taskToUpdate} />
       </div>
 
-      {tasks.length > 0 ? <TasksList tasks={tasks} completeTask={handleCompleteTask} deleteTask={handleDeleteTask} /> : <EmptyData message="Your to-do list is empty. Enjoy the satisfaction of a clean slate!" />}
+      {tasks.length > 0 ? <TasksList tasks={tasks} onEdit={handleEditTask} completeTask={handleCompleteTask} deleteTask={handleDeleteTask} /> : <EmptyData message="Your to-do list is empty. Enjoy the satisfaction of a clean slate!" />}
     </section>
   );
 };

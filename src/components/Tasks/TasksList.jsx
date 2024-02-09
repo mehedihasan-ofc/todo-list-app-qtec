@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { BsThreeDots } from "react-icons/bs";
 import { BiTask, BiTaskX } from "react-icons/bi";
 
-const TasksList = ({ tasks, deleteTask, completeTask }) => {
+const TasksList = ({ tasks, deleteTask, completeTask, onEdit }) => {
     return (
         <div className="overflow-auto mt-5">
             <table className="table-fixed overflow-auto xl:w-full">
@@ -67,7 +67,7 @@ const TasksList = ({ tasks, deleteTask, completeTask }) => {
                                             >
                                                 <Menu.Items className="absolute right-0 top-6 divide-y divide-gray-100 rounded bg-white shadow">
                                                     <Menu.Item>
-                                                        <button className="px-5 py-1 hover:bg-blue-500 hover:text-white w-full">Edit</button>
+                                                        <button onClick={() => onEdit(task)} className="px-5 py-1 hover:bg-blue-500 hover:text-white w-full">Edit</button>
                                                     </Menu.Item>
                                                     <Menu.Item>
                                                         <button onClick={() => deleteTask(task.id)} className="px-5 py-1 hover:bg-red-500 hover:text-white w-full">Delete</button>
