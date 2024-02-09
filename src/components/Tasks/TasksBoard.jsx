@@ -6,9 +6,47 @@ import Swal from 'sweetalert2';
 import EmptyData from './EmptyData';
 import TaskModal from './TaskModal';
 
+const defaultData = [
+  {
+    id: 1,
+    title: "Design User-friendly Landing Page",
+    description: "Create an attractive and intuitive landing page layout to welcome visitors and encourage engagement.",
+    status: "incomplete",
+    priority: "high"
+  },
+  {
+    id: 2,
+    title: "Implement Responsive Navigation Bar",
+    description: "Develop a navigation bar that adjusts seamlessly across various screen sizes to ensure a consistent user experience.",
+    status: "incomplete",
+    priority: "medium"
+  },
+  {
+    id: 3,
+    title: "Optimize Website Performance",
+    description: "Enhance website loading speed and overall performance by optimizing code, images, and server settings.",
+    status: "completed",
+    priority: "low"
+  },
+  {
+    id: 4,
+    title: "Test Cross-browser Compatibility",
+    description: "Verify that the website functions correctly across different web browsers to ensure broad accessibility for users.",
+    status: "incomplete",
+    priority: "medium"
+  },
+  {
+    id: 5,
+    title: "Deploy Website to Production Server",
+    description: "Deploy the finalized website to the production server, making it accessible to the public.",
+    status: "completed",
+    priority: "high"
+  }
+];
+
 const TasksBoard = () => {
   const [tasks, setTasks] = useState([]);
-  const [filteredTasks, setFilteredTasks] = useState([]); // Separate state for filtered tasks
+  const [filteredTasks, setFilteredTasks] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [taskToUpdate, setTaskToUpdate] = useState(null);
   const [latestId, setLatestId] = useState(1);
@@ -35,7 +73,7 @@ const TasksBoard = () => {
     if (savedTasks) {
       setTasks(savedTasks);
       setLatestId(savedTasks.length > 0 ? savedTasks[savedTasks.length - 1].id + 1 : 1);
-      setFilteredTasks(savedTasks); // Initialize filteredTasks with all tasks
+      setFilteredTasks(savedTasks);
     }
   };
 
@@ -58,7 +96,7 @@ const TasksBoard = () => {
       });
     }
     setTasks(updatedTasks);
-    setFilteredTasks(updatedTasks); // Update filteredTasks along with tasks
+    setFilteredTasks(updatedTasks);
     saveTasksToLocalStorage(updatedTasks);
     handleCloseClick();
   }
@@ -88,7 +126,7 @@ const TasksBoard = () => {
       if (result.isConfirmed) {
         const updatedTasks = tasks.filter(task => task.id !== taskId);
         setTasks(updatedTasks);
-        setFilteredTasks(updatedTasks); // Update filteredTasks along with tasks
+        setFilteredTasks(updatedTasks);
         saveTasksToLocalStorage(updatedTasks);
         Swal.fire(
           "Deleted!",
@@ -111,8 +149,8 @@ const TasksBoard = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         setTasks([]);
-        setFilteredTasks([]); // Update filteredTasks along with tasks
-        setLatestId(1); // Reset latestId when tasks are deleted
+        setFilteredTasks([]);
+        setLatestId(1);
         saveTasksToLocalStorage([]);
         Swal.fire(
           "Deleted!",
@@ -131,7 +169,7 @@ const TasksBoard = () => {
       return task;
     });
     setTasks(updatedTasks);
-    setFilteredTasks(updatedTasks); // Update filteredTasks along with tasks
+    setFilteredTasks(updatedTasks);
     saveTasksToLocalStorage(updatedTasks);
     Swal.fire(
       "Completed!",
@@ -144,7 +182,7 @@ const TasksBoard = () => {
     const value = e.target.value.trim().toLowerCase();
 
     if (value === '') {
-      setFilteredTasks(tasks); // Reset filteredTasks to all tasks
+      setFilteredTasks(tasks);
     } else {
       const filteredTasks = tasks.filter(task =>
         task.title.toLowerCase().includes(value)
@@ -157,7 +195,7 @@ const TasksBoard = () => {
     const value = e.target.value;
 
     if (value === '') {
-      setFilteredTasks(tasks); // Reset filteredTasks to all tasks
+      setFilteredTasks(tasks);
     } else {
       const filteredTasks = tasks.filter(task =>
         task.priority === value
