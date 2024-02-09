@@ -1,74 +1,52 @@
 # Todo List App
 
-This is a simple Todo List application built using React (specifically, Next.js). The application allows users to manage their tasks effectively by providing features such as adding, editing, and deleting tasks. Each task can be marked as completed or incomplete and is assigned a priority level (low, medium, high), indicated by different colors for better organization.
+## Description
+
+This is a simple Todo List application built using React (with Next.js), Tailwind CSS for styling, and Headless UI for modals. The application allows users to manage their tasks by adding, editing, marking as completed, and deleting tasks. Each task has a status (completed or incomplete) and a priority (low, medium, or high) which is indicated by different colors in the task list. Additionally, the application provides basic task management functionalities and a filtering system based on priority.
 
 ## Features
 
-### Task List Display
-
-- Displays a list of tasks with their respective status (completed or not completed).
-- Each task has options to mark as completed or delete.
-- Includes counters for total tasks and completed tasks.
-
-### Task Management
-
+- Display a list of tasks with their respective status (completed or not completed).
+- Option to mark a task as completed or delete it.
+- Task counter showing total tasks and completed tasks.
 - Ability to add a new task.
 - Ability to edit an existing task.
 - Ability to mark a task as completed.
 - Ability to delete a task.
-
-### Styling
-
-- Clean and user-friendly interface using HTML and CSS.
-- Utilizes Bootstrap for styling (optional).
-
-### State Management
-
-- Utilizes React hooks (e.g., useState, useEffect) as needed.
-- Utilizes React state management tool (if needed).
-
-### Bonus Features
-
-- Implements local storage to persist tasks even if the user refreshes the page.
-- Includes a basic filtering system based on Priority.
-- Additional features or improvements to enhance usability.
-
-## Technical Considerations
-
-- Uses functional components.
-- Utilizes React hooks for state management.
-- Ensures proper code structure and organization.
-- Ensures responsiveness across devices.
-
-## Evaluation Criteria
-
-Submissions will be evaluated based on the following criteria:
-
-- Correctness of functionality.
-- Code clarity and organization.
-- Proper use of React hooks and state management.
+- Stylish and user-friendly interface using Tailwind CSS.
 - Responsive design.
-- Styling and user interface.
+- Utilizes React hooks for state management.
+- Implements local storage to persist tasks even after page refresh.
+- Includes a basic filtering system based on priority.
 
-## Getting Started
+## Screenshots
 
-To run this application locally:
+![Screenshot 1](/screenshots/screenshot1.png)
+![Screenshot 2](/screenshots/screenshot2.png)
 
-1. Clone this repository.
-2. Navigate to the project directory.
-3. Install dependencies using `npm install`.
-4. Start the development server using `npm run dev`.
-5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+## Demo
 
-## Authors
+[Live Demo](#) - Provide a link to a live demo if available.
 
-- [Your Name]
+## Technologies Used
 
-## Acknowledgments
+- React (with Next.js)
+- Tailwind CSS
+- Headless UI
 
-- This project is inspired by the need for a simple and effective Todo List application.
-- Thanks to the React community for providing valuable resources and support.
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request with your suggestions or improvements.
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgements
+
+- Inspiration for this project came from [insert inspiration source here].
+- Special thanks to [insert name] for their guidance and support.
+
+## Contact
+
+For any inquiries or feedback, please contact [insert your email address].
