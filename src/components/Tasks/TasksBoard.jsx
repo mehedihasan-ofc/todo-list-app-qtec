@@ -165,9 +165,18 @@ const TasksBoard = () => {
 
     const taskToComplete = tasks.find(task => task.id === taskId);
 
+    if (taskToComplete.status === "completed") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `The task "${taskToComplete.title}" has already been completed.`,
+      });
+      return;
+    }
+
     Swal.fire({
       title: "Are you sure?",
-      text: `Do you want to mark ${taskToComplete?.title} as completed?`,
+      text: `Do you want to mark "${taskToComplete?.title}" as completed?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -187,7 +196,7 @@ const TasksBoard = () => {
         saveTasksToLocalStorage(updatedTasks);
         Swal.fire({
           title: "Completed!",
-          text: `The task ${taskToComplete?.title} has been marked as completed.`,
+          text: `The task "${taskToComplete?.title}" has been marked as completed.`,
           icon: "success",
           toast: true,
           position: "top-end",
@@ -231,13 +240,13 @@ const TasksBoard = () => {
       <div className='w-full max-w-7xl mx-auto border shadow rounded-md p-5'>
         <div className="flex flex-col md:flex-row justify-between items-center">
 
-          <div className='flex flex-col md:flex-row items-center gap-5 mb-4 md:mb-0'>
-            <div className='flex items-center gap-2'>
+          <div className='flex flex-col md:flex-row items-center gap-4 mb-4 md:mb-0'>
+            <div className='flex items-center border py-1 px-3 shadow-sm rounded gap-2'>
               <FaTasks className='text-blue-500' size={24} />
               <h4 className="text-lg text-blue-500 font-semibold">Total Tasks: <span className="font-normal">{tasks?.length}</span></h4>
             </div>
 
-            <div className='flex items-center gap-2'>
+            <div className='flex items-center border py-1 px-3 shadow-sm rounded gap-2'>
               <MdOutlineTaskAlt className='text-teal-500' size={24} />
               <h4 className="text-lg text-teal-500 font-semibold">Completed Tasks: <span className="font-normal">{tasks.filter(task => task.status === "completed").length}</span></h4>
             </div>
@@ -248,7 +257,7 @@ const TasksBoard = () => {
               <input
                 type="text"
                 placeholder="Search tasks..."
-                className="border rounded py-2 px-4 pl-10 outline-none"
+                className="border shadow-sm rounded py-2 px-4 pl-10 outline-none"
                 onChange={handleSearchInputChange}
               />
               <FaSearch className="absolute top-3 left-3 text-gray-400" />
@@ -257,7 +266,7 @@ const TasksBoard = () => {
             <div>
               <select
                 onChange={handlePriorityFilterChange}
-                className="border rounded py-2 px-4 outline-none"
+                className="border shadow-sm rounded py-2 px-4 outline-none"
               >
                 <option value="">Filter by Priority</option>
                 <option value="high">High</option>

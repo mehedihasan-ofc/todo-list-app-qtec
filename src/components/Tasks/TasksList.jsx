@@ -50,9 +50,9 @@ const TasksList = ({ tasks, deleteTask, completeTask, onEdit }) => {
                                 </td>
                                 <td>
                                     <div className="flex items-center justify-center gap-2">
-                                        <button disabled={task?.status === "completed"} onClick={() => completeTask(task.id)}><MdOutlineTaskAlt className="text-teal-500 hover:text-teal-600" size={18} /></button>
-                                        <button onClick={() => onEdit(task)}><AiOutlineEdit className="text-indigo-500 hover:text-indigo-600" size={18} /></button>
-                                        <button onClick={() => deleteTask(task.id)}><RiDeleteBin6Line className="text-red-500 hover:text-red-600" size={18} /></button>
+                                        <button title="Mark as completed" onClick={() => completeTask(task.id)}><MdOutlineTaskAlt className="text-teal-500 hover:text-teal-600" size={18} /></button>
+                                        <button title="Edit Task" onClick={() => onEdit(task)}><AiOutlineEdit className="text-indigo-500 hover:text-indigo-600" size={18} /></button>
+                                        <button title="Delete Task" onClick={() => deleteTask(task.id)}><RiDeleteBin6Line className="text-red-500 hover:text-red-600" size={18} /></button>
                                     </div>
                                 </td>
                             </tr>

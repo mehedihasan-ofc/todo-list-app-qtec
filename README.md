@@ -31,7 +31,9 @@ Hosted in Netlify -> [Todo List App](https://todo-list-app-qtec.netlify.app/)
 
 ## Screenshots
 
-![Screenshot 1](https://i.ibb.co/5FdcSML/ui.png)
-![Screenshot 2](https://i.ibb.co/z4GTjtb/modal.png)
-
-
+![Screenshot 1](https://i.ibb.co/M1csn1b/ui.png)
+![Screenshot 2](https://i.ibb.co/fFPZKrv/add-task-modal.png)
+![Screenshot 3](https://i.ibb.co/z4XrrzB/update-task-modal.png)
+![Screenshot 4](https://i.ibb.co/rwJfsjg/toast.png)
+![Screenshot 5](https://i.ibb.co/02nb3gq/success-toast.png)
+![Screenshot 6](https://i.ibb.co/QXtkzn9/no-data.png)
