@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import TasksBoard from "./components/Tasks/TasksBoard";
 import Loading from "./components/Loading/Loading";
+import Footer from "./components/Footer/Footer";
 
 const App = () => {
 
@@ -16,13 +17,14 @@ const App = () => {
     };
   }, []);
 
-  if(loading) {
+  if (loading) {
     return <Loading />
   }
 
   return (
     <>
       <TasksBoard />
+      <Footer />
     </>
   );
 };
