@@ -12,7 +12,7 @@ This is a simple Todo List application built using React (with Next.js), Tailwin
 
 ## Live Link
 
-Hosted in Firebase -> [InstruPlay Academy](https://instruplay-live.web.app/)
+Hosted in Netlify -> [Todo List App](https://instruplay-live.web.app/)
 
 ## Features
 
@@ -31,5 +31,7 @@ Hosted in Firebase -> [InstruPlay Academy](https://instruplay-live.web.app/)
 
 ## Screenshots
 
-![Screenshot 1](/screenshots/screenshot1.png)
-![Screenshot 2](/screenshots/screenshot2.png)
+![Screenshot 1](https://i.ibb.co/5FdcSML/ui.png)
+![Screenshot 2](https://i.ibb.co/z4GTjtb/modal.png)
+
+
