@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TasksList from './TasksList';
 import { FaSearch, FaTasks } from 'react-icons/fa';
 import { MdOutlineTaskAlt } from "react-icons/md";
@@ -6,78 +6,64 @@ import Swal from 'sweetalert2';
 import EmptyData from './EmptyData';
 import TaskModal from './TaskModal';
 
-const data = [
-  {
-    id: 1,
-    title: "Design User-friendly Landing Page",
-    description: "Create an attractive and intuitive landing page layout to welcome visitors and encourage engagement.",
-    status: "incomplete",
-    priority: "high"
-  },
-  {
-    id: 2,
-    title: "Implement Responsive Navigation Bar",
-    description: "Develop a navigation bar that adjusts seamlessly across various screen sizes to ensure a consistent user experience.",
-    status: "incomplete",
-    priority: "medium"
-  },
-  {
-    id: 3,
-    title: "Optimize Website Performance",
-    description: "Enhance website loading speed and overall performance by optimizing code, images, and server settings.",
-    status: "completed",
-    priority: "low"
-  },
-  {
-    id: 4,
-    title: "Test Cross-browser Compatibility",
-    description: "Verify that the website functions correctly across different web browsers to ensure broad accessibility for users.",
-    status: "incomplete",
-    priority: "medium"
-  },
-  {
-    id: 5,
-    title: "Deploy Website to Production Server",
-    description: "Deploy the finalized website to the production server, making it accessible to the public.",
-    status: "completed",
-    priority: "high"
-  }
-];
-
-
 const TasksBoard = () => {
-
-  const [tasks, setTasks] = useState(data);
-  // const [isOpen, setIsOpen] = useState(false);
+  const [tasks, setTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([]); // Separate state for filtered tasks
   const [showAddModal, setShowAddModal] = useState(false);
   const [taskToUpdate, setTaskToUpdate] = useState(null);
-  const [latestId, setLatestId] = useState(data.length + 1);
+  const [latestId, setLatestId] = useState(1);
 
+  useEffect(() => {
+    const hasDefaultDataShown = localStorage.getItem('hasDefaultDataShown');
+    const storedTasks = JSON.parse(localStorage.getItem('tasks'));
 
-  // =============================================================================>
+    if (!hasDefaultDataShown) {
+      setTasks(defaultData);
+      localStorage.setItem('tasks', JSON.stringify(defaultData));
+      localStorage.setItem('hasDefaultDataShown', true);
+    } else {
+      setTasks(storedTasks || []);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadTasksFromLocalStorage();
+  }, []);
+
+  const loadTasksFromLocalStorage = () => {
+    const savedTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (savedTasks) {
+      setTasks(savedTasks);
+      setLatestId(savedTasks.length > 0 ? savedTasks[savedTasks.length - 1].id + 1 : 1);
+      setFilteredTasks(savedTasks); // Initialize filteredTasks with all tasks
+    }
+  };
+
+  const saveTasksToLocalStorage = (updatedTasks) => {
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+  };
+
   function handleAddEditTask(newTask, isAdd) {
-
+    let updatedTasks;
     if (!isAdd) {
-      
       const taskWithId = { ...newTask, id: latestId };
-
-      setTasks([...tasks, taskWithId]);
+      updatedTasks = [...tasks, taskWithId];
       setLatestId(latestId + 1);
     } else {
-      setTasks(
-        tasks.map((task) => {
-          if (task.id === newTask.id) {
-            return newTask;
-          }
-          return task;
-        })
-      );
+      updatedTasks = tasks.map((task) => {
+        if (task.id === newTask.id) {
+          return newTask;
+        }
+        return task;
+      });
     }
+    setTasks(updatedTasks);
+    setFilteredTasks(updatedTasks); // Update filteredTasks along with tasks
+    saveTasksToLocalStorage(updatedTasks);
     handleCloseClick();
   }
 
   function handleEditTask(task) {
-
     setTaskToUpdate(task);
     setShowAddModal(true);
   }
@@ -86,20 +72,6 @@ const TasksBoard = () => {
     setShowAddModal(false);
     setTaskToUpdate(null);
   }
-
-  // =============================================================================>
-  const handleSearchInputChange = (e) => {
-    const value = e.target.value;
-
-    if (value === '') {
-      setTasks(data);
-    } else {
-      const filteredTasks = data.filter(task =>
-        task.title.toLowerCase().includes(value.toLowerCase())
-      );
-      setTasks(filteredTasks);
-    }
-  };
 
   const handleDeleteTask = (taskId) => {
     const taskToDelete = tasks.find(task => task.id === taskId);
@@ -114,7 +86,10 @@ const TasksBoard = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        setTasks(tasks.filter(task => task.id !== taskId));
+        const updatedTasks = tasks.filter(task => task.id !== taskId);
+        setTasks(updatedTasks);
+        setFilteredTasks(updatedTasks); // Update filteredTasks along with tasks
+        saveTasksToLocalStorage(updatedTasks);
         Swal.fire(
           "Deleted!",
           `The task "${taskToDelete.title}" has been successfully deleted.`,
@@ -136,6 +111,9 @@ const TasksBoard = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         setTasks([]);
+        setFilteredTasks([]); // Update filteredTasks along with tasks
+        setLatestId(1); // Reset latestId when tasks are deleted
+        saveTasksToLocalStorage([]);
         Swal.fire(
           "Deleted!",
           "All tasks have been successfully deleted.",
@@ -146,9 +124,6 @@ const TasksBoard = () => {
   };
 
   const handleCompleteTask = (taskId) => {
-
-    const taskToDelete = tasks.find(task => task.id === taskId);
-
     const updatedTasks = tasks.map(task => {
       if (task.id === taskId) {
         return { ...task, status: "completed" };
@@ -156,26 +131,40 @@ const TasksBoard = () => {
       return task;
     });
     setTasks(updatedTasks);
+    setFilteredTasks(updatedTasks); // Update filteredTasks along with tasks
+    saveTasksToLocalStorage(updatedTasks);
     Swal.fire(
       "Completed!",
-      `The task "${taskToDelete.title}" has been marked as completed.`,
+      `The task with ID ${taskId} has been marked as completed.`,
       "success"
     );
   };
 
-  const handlePriorityFilterChange = (e) => {
-    const value = e.target.value;
+  const handleSearchInputChange = (e) => {
+    const value = e.target.value.trim().toLowerCase();
+
     if (value === '') {
-      setTasks(data);
+      setFilteredTasks(tasks); // Reset filteredTasks to all tasks
     } else {
-      const filteredTasks = data.filter(task =>
-        task.priority === value
+      const filteredTasks = tasks.filter(task =>
+        task.title.toLowerCase().includes(value)
       );
-      setTasks(filteredTasks);
+      setFilteredTasks(filteredTasks);
     }
   };
 
+  const handlePriorityFilterChange = (e) => {
+    const value = e.target.value;
 
+    if (value === '') {
+      setFilteredTasks(tasks); // Reset filteredTasks to all tasks
+    } else {
+      const filteredTasks = tasks.filter(task =>
+        task.priority === value
+      );
+      setFilteredTasks(filteredTasks);
+    }
+  };
 
   return (
     <section className='w-full md:max-w-7xl mx-auto border shadow rounded-md p-5 my-10'>
@@ -192,16 +181,37 @@ const TasksBoard = () => {
           </div>
         </div>
 
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search tasks..."
+            className="border rounded py-2 px-4 pl-10 outline-none"
+            onChange={handleSearchInputChange}
+          />
+          <FaSearch className="absolute top-3 left-3 text-gray-400" />
+        </div>
+
+        <div>
+          <select
+            onChange={handlePriorityFilterChange}
+            className="border rounded py-2 px-4 outline-none"
+          >
+            <option value="">Filter by Priority</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+
         <div>
           <button onClick={() => setShowAddModal(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-5">Add Task</button>
           <button onClick={handleDeleteAllTasks} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete All</button>
         </div>
 
-        {/* add task modal */}
         <TaskModal isOpen={showAddModal} closeModal={handleCloseClick} onSave={handleAddEditTask} taskToUpdate={taskToUpdate} />
       </div>
 
-      {tasks.length > 0 ? <TasksList tasks={tasks} onEdit={handleEditTask} completeTask={handleCompleteTask} deleteTask={handleDeleteTask} /> : <EmptyData message="Your to-do list is empty. Enjoy the satisfaction of a clean slate!" />}
+      {filteredTasks.length > 0 ? <TasksList tasks={filteredTasks} onEdit={handleEditTask} completeTask={handleCompleteTask} deleteTask={handleDeleteTask} /> : <EmptyData message="No Data Found!" />}
     </section>
   );
 };
