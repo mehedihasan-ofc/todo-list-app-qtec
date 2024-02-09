@@ -162,20 +162,41 @@ const TasksBoard = () => {
   };
 
   const handleCompleteTask = (taskId) => {
-    const updatedTasks = tasks.map(task => {
-      if (task.id === taskId) {
-        return { ...task, status: "completed" };
+
+    const taskToComplete = tasks.find(task => task.id === taskId);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Do you want to mark ${taskToComplete?.title} as completed?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, mark it as completed"
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        const updatedTasks = tasks.map(task => {
+          if (task.id === taskId) {
+            return { ...task, status: "completed" };
+          }
+          return task;
+        });
+        setTasks(updatedTasks);
+        setFilteredTasks(updatedTasks);
+        saveTasksToLocalStorage(updatedTasks);
+        Swal.fire({
+          title: "Completed!",
+          text: `The task ${taskToComplete?.title} has been marked as completed.`,
+          icon: "success",
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000
+        });
+
       }
-      return task;
     });
-    setTasks(updatedTasks);
-    setFilteredTasks(updatedTasks);
-    saveTasksToLocalStorage(updatedTasks);
-    Swal.fire(
-      "Completed!",
-      `The task with ID ${taskId} has been marked as completed.`,
-      "success"
-    );
   };
 
   const handleSearchInputChange = (e) => {
@@ -205,7 +226,7 @@ const TasksBoard = () => {
   };
 
   return (
-    <section className='px-10 py-5'>
+    <section className='p-5'>
 
       <div className='w-full max-w-7xl mx-auto border shadow rounded-md p-5'>
         <div className="flex flex-col md:flex-row justify-between items-center">

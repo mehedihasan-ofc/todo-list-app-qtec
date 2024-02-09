@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 const TaskModal = ({ onSave, taskToUpdate, isOpen, closeModal }) => {
     const initialTaskState = useMemo(() => ({
@@ -12,7 +13,7 @@ const TaskModal = ({ onSave, taskToUpdate, isOpen, closeModal }) => {
     const [task, setTask] = useState(initialTaskState);
 
     useEffect(() => {
-        if(taskToUpdate) {
+        if (taskToUpdate) {
             setTask(taskToUpdate);
         } else {
             setTask(initialTaskState);
@@ -62,12 +63,20 @@ const TaskModal = ({ onSave, taskToUpdate, isOpen, closeModal }) => {
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                <Dialog.Title
-                                    as="h3"
-                                    className="text-lg font-medium leading-6 text-gray-900"
-                                >
-                                    {taskToUpdate ? 'Update Task' : 'Add New Task'}
-                                </Dialog.Title>
+
+                                <div className='flex justify-between items-center mb-3'>
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-medium leading-6 text-gray-900"
+                                    >
+                                        {taskToUpdate ? 'Update Task' : 'Add New Task'}
+                                    </Dialog.Title>
+
+                                    <button onClick={closeModal}>
+                                        <IoIosCloseCircleOutline className='text-red-400 transition-colors duration-300 hover:text-red-600' size={22} />
+                                    </button>
+
+                                </div>
 
                                 <form onSubmit={handleSubmit}>
                                     <div className="mt-2">
