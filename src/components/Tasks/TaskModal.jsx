@@ -1,21 +1,23 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
 const TaskModal = ({ onSave, taskToUpdate, isOpen, closeModal }) => {
-    const initialTaskState = {
+    const initialTaskState = useMemo(() => ({
         title: "",
         description: "",
         status: "incomplete",
         priority: ""
-    };
+    }), []);
 
     const [task, setTask] = useState(initialTaskState);
 
     useEffect(() => {
         if(taskToUpdate) {
             setTask(taskToUpdate);
+        } else {
+            setTask(initialTaskState);
         }
-    }, [taskToUpdate])
+    }, [taskToUpdate, initialTaskState, isOpen]);
 
     const handleChange = (evt) => {
         const name = evt.target.name;
@@ -64,7 +66,7 @@ const TaskModal = ({ onSave, taskToUpdate, isOpen, closeModal }) => {
                                     as="h3"
                                     className="text-lg font-medium leading-6 text-gray-900"
                                 >
-                                    {taskToUpdate ? 'Add New Task' : 'Update Task'}
+                                    {taskToUpdate ? 'Update Task' : 'Add New Task'}
                                 </Dialog.Title>
 
                                 <form onSubmit={handleSubmit}>
